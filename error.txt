@@ -1,0 +1,32 @@
+
+create proc [dbo].[getMonthyReportOrderByStudent01]
+@bid int,
+@rid int,
+@mid int
+as
+begin
+Select r.RegistrationId,  m.MonthId, r.Name , m.Price , m.Status, m.OrderDate, mt.Name as 'MealType' , wd.Name as 'Day' 
+from Bill b 
+inner join Registration r on b.RegistrationId = r.RegistrationId
+inner join Messing m on r.RegistrationId = m.RegistrationId
+inner join MealType mt on m.MealTypeId = mt.MealTypeId
+inner join Weekday wd on m.WeekdayId = wd.WeekdayId
+where r.RegistrationId = @rid AND m.MonthId = @mid AND m.Hostory = 'True' AND b.Billid = @bid
+end
+
+Select r.RegistrationId,  m.MonthId, mon.Name, r.Name, m.Price , m.Status, m.OrderDate, mt.Name as 'MealType' , wd.Name as 'Day' 
+from Bill b 
+inner join Registration r on b.RegistrationId = r.RegistrationId
+inner join Messing m on r.RegistrationId = m.RegistrationId
+inner join MealType mt on m.MealTypeId = mt.MealTypeId
+inner join Weekday wd on m.WeekdayId = wd.WeekdayId
+inner join Month mon on m.MonthId = mon.MonthId
+where r.RegistrationId = 6 AND m.MonthId = 7 AND m.Hostory = 'True' AND b.Billid = 15
+
+select * from Bill b 
+inner join Messing m on b.Billid = b.Billid
+inner join Registration r on b.RegistrationId = r.RegistrationId
+inner join MealType mt on m.MealTypeId = mt.MealTypeId
+inner join Weekday wd on m.WeekdayId = wd.WeekdayId
+inner join Month mon on m.MonthId = mon.MonthId
+where r.RegistrationId = 6 AND m.MonthId = 7 AND m.Hostory = 'True' AND b.Billid = 15
